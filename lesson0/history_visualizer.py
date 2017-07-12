@@ -1,10 +1,7 @@
 from numpy import *
 
 from matplotlib import pyplot as plt
-
-import pylab
-
-import time
+from matplotlib import animation as animation
 
 training_history = genfromtxt("training_history.csv", delimiter=",")
 points = genfromtxt("data.csv", delimiter=",")
@@ -23,22 +20,25 @@ errorText = axes.text(0.55, 0.025, '', transform=axes.transAxes)
 
 plt.show(block=False)
 
-for item in training_history:
-    iteration, b, m, error = item
 
-    iterationText.set_text(f"Iteration: {iteration}")
-    errorText.set_text(f"Error: {error}")
+def update_data():
+    for item in training_history:
+        iteration, b, m, error = item
 
-    # Update function line
-    xdata = range(90)
-    ydata = [m * x + b for x in xdata]
-    line.set_xdata(xdata)
-    line.set_ydata(ydata)
+        iterationText.set_text(f"Iteration: {iteration}")
+        errorText.set_text(f"Error: {error}")
 
-    # Draw changes
-    # axes.draw_artist(axes.patch)
-    axes.draw_artist(line)
-    fig.canvas.draw()
-    time.sleep(2 / (iteration + 1) ** (1/2))
+        # Update function line
+        xdata = range(90)
+        ydata = [m * x + b for x in xdata]
+        line.set_xdata(xdata)
+        line.set_ydata(ydata)
+        yield None
 
-pylab.show()
+
+def update_graph(_): pass
+
+# noinspection PyTypeChecker
+anim = animation.FuncAnimation(fig, update_graph, update_data, interval=16)
+
+plt.show()

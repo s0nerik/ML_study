@@ -42,8 +42,8 @@ def gradient_descent_runner(points, initial_b, initial_m, learning_rate, num_ite
 
 def run():
     points = genfromtxt("data.csv", delimiter=",")
-    learning_rate = 0.0001
-    num_iterations = 1000
+    learning_rate = 0.00001
+    num_iterations = 10000
     initial_b = 0  # initial y-intercept guess
     initial_m = 0  # initial slope guess
 
