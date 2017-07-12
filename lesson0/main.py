@@ -35,7 +35,8 @@ def gradient_descent_runner(points, initial_b, initial_m, learning_rate, num_ite
     with open('training_history.csv', 'w') as training_history:
         for i in range(num_iterations):
             b, m = step_gradient(b, m, points, learning_rate)
-            training_history.write(f"{i}, {b}, {m}\n")
+            current_error = compute_error_for_line_given_points(b, m, points)
+            training_history.write(f"{i}, {b}, {m}, {current_error}\n")
     return b, m
 
 

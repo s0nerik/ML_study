@@ -1,7 +1,6 @@
 from numpy import *
 
 from matplotlib import pyplot as plt
-from matplotlib import animation as animation
 
 import pylab
 
@@ -20,13 +19,15 @@ for point in points:
 
 line, = axes.plot([], [], 'r-')
 iterationText = axes.text(0.025, 0.025, '', transform=axes.transAxes)
+errorText = axes.text(0.55, 0.025, '', transform=axes.transAxes)
 
 plt.show(block=False)
 
 for item in training_history:
-    iteration, b, m = item
+    iteration, b, m, error = item
 
     iterationText.set_text(f"Iteration: {iteration}")
+    errorText.set_text(f"Error: {error}")
 
     # Update function line
     xdata = range(90)
@@ -37,10 +38,7 @@ for item in training_history:
     # Draw changes
     # axes.draw_artist(axes.patch)
     axes.draw_artist(line)
-
-    time.sleep(1 / 600)
     fig.canvas.draw()
-
-    print(time.clock())
+    time.sleep(2 / (iteration + 1) ** (1/2))
 
 pylab.show()
