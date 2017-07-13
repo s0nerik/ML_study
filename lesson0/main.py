@@ -48,7 +48,6 @@ def run():
     initial_m = 0  # initial slope guess
 
     print(f"Starting gradient descent at b = {initial_b}, m = {initial_m}, error = {compute_error_for_line_given_points(initial_b, initial_m, points)}")
-    print("Running...")
     b, m = gradient_descent_runner(points, initial_b, initial_m, learning_rate, num_iterations)
     print(f"After {num_iterations} iterations b = {b}, m = {m}, error = {compute_error_for_line_given_points(b, m, points)}")
 

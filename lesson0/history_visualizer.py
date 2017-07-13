@@ -18,6 +18,9 @@ line, = axes.plot([], [], 'r-')
 iterationText = axes.text(0.025, 0.025, '', transform=axes.transAxes)
 errorText = axes.text(0.55, 0.025, '', transform=axes.transAxes)
 
+bText = axes.text(0.025, 0.955, '', transform=axes.transAxes)
+mText = axes.text(0.55, 0.955, '', transform=axes.transAxes)
+
 plt.show(block=False)
 
 
@@ -27,6 +30,8 @@ def update_data():
 
         iterationText.set_text(f"Iteration: {iteration}")
         errorText.set_text(f"Error: {error}")
+        bText.set_text(f"b: {b}")
+        mText.set_text(f"m: {m}")
 
         # Update function line
         xdata = range(90)
@@ -38,7 +43,11 @@ def update_data():
 
 def update_graph(_): pass
 
-# noinspection PyTypeChecker
-anim = animation.FuncAnimation(fig, update_graph, update_data, interval=16)
 
-plt.show()
+def run():
+    # noinspection PyTypeChecker
+    anim = animation.FuncAnimation(fig, update_graph, update_data, interval=16)
+    plt.show()
+
+if __name__ == '__main__':
+    run()
