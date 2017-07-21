@@ -38,19 +38,19 @@ A = tf.Variable(tf.random_normal(shape=[x_len, 1]))
 b = tf.Variable(tf.random_normal(shape=[y_len, 1]))
 
 # Declare model operations
-model_output = tf.subtract(tf.matmul(x_data, A), b)
+model_output = tf.matmul(x_data, A) - b
 
 # Declare vector L2 'norm' function squared
-l2_norm = tf.reduce_sum(tf.square(A))
+l2_norm = tf.reduce_sum(A**2)
 
 # Declare loss function
 # Loss = max(0, 1-pred*actual) + alpha * L2_norm(A)^2
 # L2 regularization parameter, alpha
 alpha = tf.constant([0.01])
 # Margin term in loss
-classification_term = tf.reduce_mean(tf.maximum(0., tf.subtract(1., tf.multiply(model_output, y_target))))
+classification_term = tf.reduce_mean(tf.maximum(0., 1. - model_output * y_target))
 # Put terms together
-loss = tf.add(classification_term, tf.multiply(alpha, l2_norm))
+loss = classification_term + alpha * l2_norm
 
 # Declare prediction function
 prediction = tf.sign(model_output)
@@ -68,7 +68,7 @@ sess.run(init)
 loss_vec = []
 train_accuracy = []
 test_accuracy = []
-for i in range(5000):
+for i in range(2000):
     rand_index = np.random.choice(len(x_vals_train), size=batch_size)
     rand_x = x_vals_train[rand_index]
     rand_y = np.transpose([y_vals_train[rand_index]])
